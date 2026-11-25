@@ -1,0 +1,104 @@
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1f2933;
+  background: #f5f7fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+h1 {
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #52606d;
+  margin-top: 0;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e4e7eb;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #9aa5b1;
+  cursor: not-allowed;
+}
+
+.preview {
+  max-width: 260px;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.result-list {
+  list-style: none;
+  padding: 0;
+}
+
+.result-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.bar {
+  height: 8px;
+  background: #2563eb;
+  border-radius: 4px;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+.image-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.image-row figure {
+  margin: 0;
+}
+
+.image-row img {
+  max-width: 200px;
+  border-radius: 8px;
+  border: 1px solid #e4e7eb;
+}
+
+.image-row figcaption {
+  font-size: 0.8rem;
+  color: #52606d;
+  text-align: center;
+  margin-top: 0.25rem;
+}

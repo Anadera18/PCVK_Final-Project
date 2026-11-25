@@ -1,0 +1,23 @@
+{
+  "results": {
+    "SVM": {
+      "accuracy_holdout": 0.5208333333333334,
+      "accuracy_cv_mean": 0.5208333333333334,
+      "accuracy_cv_std": 0.060059030700249316
+    },
+    "Random Forest": {
+      "accuracy_holdout": 0.6875,
+      "accuracy_cv_mean": 0.6219858156028369,
+      "accuracy_cv_std": 0.040300720290496084
+    }
+  },
+  "best_model": "Random Forest",
+  "classes": [
+    "parang",
+    "kawung",
+    "megamendung",
+    "cendrawasih",
+    "ceplok"
+  ],
+  "feature_length": 114
+}
