@@ -4,6 +4,8 @@ A website that guesses the **batik motif type** from a photo using classical
 machine learning (no deep learning). Final project for the *Pengolahan Citra dan
 Visi Komputer* (Image Processing and Computer Vision) course.
 
+![Sample images of the five batik classes](results/dataset_samples.png)
+
 ## How it works
 
 ```
@@ -15,6 +17,8 @@ photo → preprocessing → features (GLCM + LBP + HSV) → SVM / Random Forest 
 - **Models:** SVM and Random Forest, compared by accuracy, confusion matrix, and 5-fold cross-validation.
 - **Results:** Random Forest is best (hold-out accuracy ≈ 0.69, 5-fold ≈ 0.62).
 - **Website:** **React** frontend + **FastAPI** backend — upload a photo, see the predicted class and confidence.
+
+![Sample predictions with confidence scores](results/sample_predictions.png)
 
 ## Classes (5)
 
