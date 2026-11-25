@@ -6,6 +6,5 @@ opencv-python
 matplotlib
 seaborn
 joblib
-streamlit
 pillow
 jupyter

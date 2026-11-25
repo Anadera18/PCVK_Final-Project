@@ -16,6 +16,10 @@ yarn-error.log*
 # data/selected/ (the 5 classes used for training) IS committed.
 data/raw/
 
+# Local-only handoff / prompt notes (not part of the project source).
+docs/handoff_gdocs.md
+docs/prompt_overview.md
+
 # OS
 .DS_Store
 Thumbs.db

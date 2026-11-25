@@ -1,56 +1,52 @@
 # Batik Checker
 
-Website yang menebak **jenis motif batik** dari foto menggunakan machine learning
-klasik (tanpa deep learning). Tugas akhir mata kuliah *Pengolahan Citra dan Visi
-Komputer*.
+A website that guesses the **batik motif type** from a photo using classical
+machine learning (no deep learning). Final project for the *Pengolahan Citra dan
+Visi Komputer* (Image Processing and Computer Vision) course.
 
-## Cara kerja
+## How it works
 
 ```
-foto → preprocessing → fitur (GLCM + LBP + HSV) → SVM / Random Forest → prediksi motif
+photo → preprocessing → features (GLCM + LBP + HSV) → SVM / Random Forest → predicted motif
 ```
 
 - **Preprocessing:** resize 128×128 → grayscale + HSV → Gaussian blur → histogram equalization.
-- **Fitur:** tekstur GLCM + tekstur lokal LBP + histogram warna HSV (4×4×4), digabung (114 fitur) lalu di-scaling.
-- **Model:** SVM dan Random Forest, dibandingkan lewat accuracy, confusion matrix, dan 5-fold cross-validation.
-- **Hasil:** Random Forest terbaik (hold-out accuracy ≈ 0.69, 5-fold ≈ 0.62).
-- **Website:** **React** frontend + **FastAPI** backend — upload foto, lihat prediksi kelas dan confidence.
+- **Features:** GLCM texture + local LBP texture + HSV colour histogram (4×4×4), concatenated (114 features) then scaled.
+- **Models:** SVM and Random Forest, compared by accuracy, confusion matrix, and 5-fold cross-validation.
+- **Results:** Random Forest is best (hold-out accuracy ≈ 0.69, 5-fold ≈ 0.62).
+- **Website:** **React** frontend + **FastAPI** backend — upload a photo, see the predicted class and confidence.
 
-## Kelas (5)
+## Classes (5)
 
 `parang`, `kawung`, `megamendung`, `cendrawasih`, `ceplok`.
 
-## Struktur project
+## Project structure
 
 ```
 Final_Project/
 ├── data/
-│   ├── raw/                  # dataset asli 20 kelas (arsip)
-│   └── selected/             # 5 kelas terpilih untuk training
+│   ├── raw/                  # original 20-class dataset (archive, not committed)
+│   └── selected/             # 5 classes chosen for training
 ├── notebooks/
-│   └── batik_checker.ipynb   # SELURUH pipeline ML ada di sini (self-contained)
-├── backend/                  # REST API (FastAPI) untuk prediksi
-│   ├── main.py               # endpoint: / , /motifs , /predict , /docs
-│   ├── classifier.py         # preprocessing + ekstraksi fitur + prediksi
+│   └── batik_checker.ipynb   # the ENTIRE ML pipeline lives here (self-contained)
+├── backend/                  # REST API (FastAPI) for prediction
+│   ├── main.py               # endpoints: / , /motifs , /predict , /docs
+│   ├── classifier.py         # preprocessing + feature extraction + prediction
 │   └── requirements.txt
 ├── frontend/                 # web app (React + Vite)
-│   ├── src/App.jsx           # halaman upload + hasil
-│   ├── src/api.js            # panggil backend
+│   ├── src/App.jsx           # upload page + results
+│   ├── src/api.js            # calls the backend
 │   └── package.json
-├── app/
-│   └── streamlit_app.py      # versi lama (Streamlit) — opsional
-├── models/                   # model, scaler, label (joblib) hasil notebook
-├── results/                  # confusion matrix + metrics.json
+├── models/                   # model, scaler, labels (joblib) produced by the notebook
+├── results/                  # confusion matrices + metrics.json
 ├── docs/
-│   ├── laporan.md            # draft laporan
-│   ├── handoff_gdocs.md      # prompt + laporan untuk Google Docs
-│   └── prompt_overview.md    # prompt untuk membangun notebook dengan model lain
-├── requirements.txt          # dependency ML (notebook)
+│   └── laporan.md            # report draft
+├── requirements.txt          # ML dependencies (notebook)
 └── README.md
 ```
 
-Semua kode ML ada **di dalam notebook** — tanpa script terpisah. Untuk retraining,
-cukup ubah parameter di notebook dan jalankan ulang.
+All ML code lives **inside the notebook** — there are no separate scripts. To
+retrain, just change the parameters in the notebook and run it again.
 
 ## Setup
 
@@ -61,18 +57,19 @@ python -m venv .venv
 
 ## Training / retraining
 
-1. Buka `notebooks/batik_checker.ipynb` (pilih kernel `.venv`).
-2. Ubah parameter di bagian **Configuration** atau hiperparameter model di bagian **Training** kalau perlu.
-3. **Run All** (menu *Cell → Run All*).
+1. Open `notebooks/batik_checker.ipynb` (select the `.venv` kernel).
+2. Change the parameters in the **Configuration** cell or the model
+   hyperparameters in the **Training** section if needed.
+3. **Run All** (*Cell → Run All*).
 
-Output yang dihasilkan:
+Generated output:
 
 - `models/best_model.joblib`, `models/scaler.joblib`, `models/labels.joblib`
 - `results/confusion_matrix_*.png`, `results/cross_validation.png`,
   `results/dataset_samples.png`, `results/preprocessing_steps.png`,
   `results/sample_predictions.png`, `results/metrics.json`
 
-## Menjalankan website (React + FastAPI)
+## Running the website (React + FastAPI)
 
 **1. Backend (FastAPI):**
 
@@ -82,7 +79,7 @@ cd backend
 ..\.venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000
 ```
 
-Buka http://localhost:8000/docs untuk mencoba API.
+Open http://localhost:8000/docs to try the API.
 
 **2. Frontend (React):**
 
@@ -92,18 +89,10 @@ npm install
 npm run dev
 ```
 
-Buka http://localhost:5173 (butuh backend tetap jalan). Frontend mem-proxy `/api`
-ke backend di port 8000.
+Open http://localhost:5173 (the backend must be running). The frontend proxies
+`/api` to the backend on port 8000.
 
-## Versi lama (Streamlit)
+## Notes
 
-Masih tersedia sebagai alternatif:
-
-```powershell
-.\.venv\Scripts\streamlit.exe run app/streamlit_app.py
-```
-
-## Catatan
-
-- **Tesseract (OCR) tidak dipakai** — motif batik tidak berisi teks, jadi OCR tidak relevan.
-- Model terbaik dipilih otomatis berdasarkan accuracy tertinggi.
+- **Tesseract (OCR) is not used** — batik motifs contain no text, so OCR is not relevant.
+- The best model is selected automatically by highest accuracy.
