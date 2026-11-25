@@ -44,7 +44,9 @@ STATE POLYTECHNIC OF MALANG
    4.5 Sample predictions
 5. Discussion
 6. Website Framework
-7. Conclusion
+7. Risk and Limitations
+8. Conclusion
+References
 
 ---
 
@@ -293,7 +295,47 @@ the top 3 results and motif description cards.
 
 ---
 
-## 7. Conclusion
+## 7. Risk and Limitations
+
+**Data limitations**
+- **Small dataset.** Only 45–50 images per class (238 usable total), with a
+  48-image hold-out test set. A single split is noisy, which is why 5-fold
+  cross-validation is also reported (Random Forest: 0.69 hold-out vs 0.62 CV).
+- **Human-degraded source.** The dataset was scraped from Bing, not curated by
+  experts; images vary in lighting, crop, angle and resolution (158 unique sizes),
+  and some contain watermarks or fabric folds. Two files were corrupted and skipped.
+- **Class ambiguity.** `parang`, `kawung` and `ceplok` are all dense, regular
+  geometric motifs, so some images are genuinely hard to separate even by eye.
+
+**Method limitations**
+- **Hand-crafted features are lossy.** GLCM + LBP capture *how regular* a texture
+  is, not its *spatial arrangement* — the very property that separates the three
+  geometric motifs. This is the main cause of the remaining errors.
+- **No deep learning (assignment constraint).** A CNN would likely score higher,
+  but is out of scope for this project.
+- **Single-image, whole-image prediction.** The model assumes the photo is mostly
+  motif; a photo dominated by background, a person or a logo will mislead it.
+- **No motif localisation.** It classifies the whole image, so a mixed or composite
+  batik (several motifs in one cloth) is ambiguous.
+
+**Deployment / usage risks**
+- **Over-confidence.** Probabilities from a calibrated model are not guarantees;
+  a wrong prediction can still be shown with high confidence.
+- **Closed-set classifier.** The model recognises only the **5 trained motifs**.
+  Any other input — including the other 15 batik classes — is still forced into
+  one of these five; there is no "unknown" class. This risks mislabelling and
+  should be stated in the UI.
+- **Not a cultural authority.** Motif names and descriptions are approximate and
+  should not be treated as a definitive cultural reference.
+- **Security & robustness.** The API validates upload type and size (max 5 MB)
+  but has no authentication, rate-limiting or malware scanning. It is a coursework
+  prototype, not production-hardened.
+- **Reproducibility.** Results depend on the fixed random seed and library
+  versions; a different environment may give slightly different numbers.
+
+---
+
+## 8. Conclusion
 
 An end-to-end classical computer-vision system was built that classifies five
 Indonesian batik motifs from photos. It uses preprocessing (resize, grey/HSV,
@@ -308,3 +350,33 @@ classical texture/colour features on visually similar batik motifs.
 
 **Future work:** enlarge the dataset, add augmentation, and add structural/shape
 descriptors to better separate the dense geometric motifs.
+
+---
+
+## References
+
+[1] D. D. Hermansyah, "Indonesian Batik Motifs," Kaggle, 2020. [Online]. Available: https://www.kaggle.com/datasets/dionisiusdh/indonesian-batik-motifs. License: CC0 Public Domain. (Accessed: 25 Nov 2026)
+
+[2] UNESCO, "Indonesian Batik," UNESCO Intangible Cultural Heritage, 2009. [Online]. Available: https://ich.unesco.org/en/RL/indonesian-batik-00170
+
+[3] R. M. Haralick, K. Shanmugam, and I. Dinstein, "Textural Features for Image Classification," *IEEE Transactions on Systems, Man, and Cybernetics*, vol. SMC-3, no. 6, pp. 610–621, 1973.
+
+[4] T. Ojala, M. Pietikäinen, and D. Harwood, "A Comparative Study of Texture Measures with Classification Based on Feature Distributions," *Pattern Recognition*, vol. 29, no. 1, pp. 51–59, 1996.
+
+[5] F. Pedregosa et al., "Scikit-learn: Machine Learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
+
+[6] S. van der Walt et al., "scikit-image: Image Processing in Python," *PeerJ*, vol. 2, e453, 2014.
+
+[7] G. Bradski, "The OpenCV Library," *Dr. Dobb's Journal of Software Tools*, 2000.
+
+[8] C. R. Harris et al., "Array Programming with NumPy," *Nature*, vol. 585, pp. 357–362, 2020.
+
+[9] J. D. Hunter, "Matplotlib: A 2D Graphics Environment," *Computing in Science & Engineering*, vol. 9, no. 3, pp. 90–95, 2007.
+
+[10] C. Cortes and V. Vapnik, "Support-Vector Networks," *Machine Learning*, vol. 20, no. 3, pp. 273–297, 1995.
+
+[11] L. Breiman, "Random Forests," *Machine Learning*, vol. 45, no. 1, pp. 5–32, 2001.
+
+[12] S. Ramírez, "FastAPI," 2018. [Online]. Available: https://fastapi.tiangolo.com
+
+[13] Meta Open Source, "React," [Online]. Available: https://react.dev
