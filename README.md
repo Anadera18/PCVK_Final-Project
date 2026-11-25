@@ -4,7 +4,7 @@ A website that guesses the **batik motif type** from a photo using classical
 machine learning (no deep learning). Final project for the *Pengolahan Citra dan
 Visi Komputer* (Image Processing and Computer Vision) course.
 
-![]("PCVK\Final_Project\results\dataset_samples.png")
+![]("PCVK_Final-Project\results\dataset_samples.png")
 
 ## How it works
 
